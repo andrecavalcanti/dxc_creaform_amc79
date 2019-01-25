@@ -1,8 +1,6 @@
 codeunit 50001 "DXC DIS"
 {
-    // version EC1.02
-
-
+    
     trigger OnRun();
     begin
     end;
@@ -23,6 +21,8 @@ codeunit 50001 "DXC DIS"
             CurrMonthFilter(FldValue);
           'CRMDATETIME2DATE':
             DateTimeToDate(FldValue);
+          'DATE-1D' :
+            DatetoPreviousDate(FldValue);
         end;
     end;
 
@@ -52,5 +52,14 @@ codeunit 50001 "DXC DIS"
         EVALUATE(DateValue,DateStr);
         FldValue := DateValue;
     end;
+    // >> AMC-89
+    local procedure DatetoPreviousDate(var FldValue : Variant);
+    var
+        FirstDate : Date;
+        LastDate : Date;
+    begin
+        FldValue := CALCDATE('<-1D>',FldValue);      
+    end;
+    // << AMC-89
 }
 
