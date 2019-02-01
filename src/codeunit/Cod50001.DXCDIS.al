@@ -26,6 +26,24 @@ codeunit 50001 "DXC DIS"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, 5100957, 'OnBeforeCodeunitParameter', '', false, false)]
+    local procedure HandleBeforeCodeunitParameterOnDISMappingCodeunitMgt(var MappingCodeunit : Record "DIS - Mapping Codeunit");
+    var
+        RegisterMgt : Codeunit "DIS - Mapping Register Mgt.";
+        TempSetup : Record "DIS - Setup";
+        EntryWarnTxt : Text;
+    begin
+
+        if MappingCodeunit."Codeunit Parameter" <> 'ERRORONPOST' then
+          exit;
+
+        TempSetup.GET;
+
+        EntryWarnTxt := RegisterMgt.GetVariableTxt(FORMAT(TempSetup."Entry Variables Editable"::EntryWarningText));
+        if EntryWarnTxt <> '' then
+          ERROR(EntryWarnTxt);
+    end;
+
     procedure "--- Source Code Tag ---"();
     begin
     end;
