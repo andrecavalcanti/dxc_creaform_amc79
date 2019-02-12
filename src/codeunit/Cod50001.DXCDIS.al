@@ -23,6 +23,8 @@ codeunit 50001 "DXC DIS"
             DateTimeToDate(FldValue);
           'DATE-1D' :
             DatetoPreviousDate(FldValue);
+          'DECIMALTOINTEGER' : 
+            DecimalToInteger(FldValue);
         end;
     end;
 
@@ -79,5 +81,12 @@ codeunit 50001 "DXC DIS"
         FldValue := CALCDATE('<-1D>',FldValue);      
     end;
     // << AMC-89
+
+     // >> AMC-97
+    local procedure DecimalToInteger(var FldValue : Variant);    
+    begin        
+        FldValue := ROUND(FldValue,100,'=');     
+    end;
+    // << AMC-97
 }
 
